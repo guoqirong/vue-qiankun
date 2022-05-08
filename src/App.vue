@@ -1,30 +1,60 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div className="left-menu">
+    <div className="left-menu-title">QIANKUN</div>
+    <div className="left-menu-body">
+      <MenuItem
+        v-for="(item, i) in [...routes, ...qiankunRouter]"
+        :key="i"
+        :menuText="item.name"
+        :menuPath="item.path"
+      />
+    </div>
   </div>
-  <router-view/>
+  <div className="rigth-qiankun-wrapper">
+    <router-view />
+    <Loading :visible="loading">
+      <div id="container"></div>
+    </Loading>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import MenuItem from '@/components/menu-item/index.vue';
+import Loading from '@/components/loading/index.vue';
+import { routes } from './router';
+import { getQiankunAppUrl } from '@/utils';
+import useEventBus from './utils/eventBus';
+import { useRoute } from 'vue-router';
 
-#nav {
-  padding: 30px;
-}
+export default defineComponent({
+  components: {
+    MenuItem,
+    Loading
+  },
+  setup() {
+    const qiankunRouter = getQiankunAppUrl();
+    const loading = ref(false);
+    const [event] = useEventBus();
+    const route = useRoute();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    event.on('qiankun-child-loading', (data: any) => {
+      const {isLoading, isMenuClick} = data ?? {};
+      if (route.path === '/' && !isMenuClick) {
+        loading.value = false;
+      } else {
+        loading.value = Boolean(isLoading);
+      }
+    });
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+    return {
+      routes,
+      qiankunRouter,
+      loading
+    }
+  },
+})
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+
+<style lang="scss" src="./app.scss"></style>
