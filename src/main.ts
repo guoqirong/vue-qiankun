@@ -23,14 +23,18 @@ registerMicroApps(qiankunApp.map((item: {
 }), {
   beforeLoad: (app) => {
     console.log('before load', app.name);
-    event.emit('qiankun-child-loading', true);
+    event.emit('qiankun-child-loading', {
+      isLoading: true
+    });
     return new Promise<void>((resolve) => {
       resolve();
     });
   },
   afterMount: (app) => {
     console.log('after mount', app.name);
-    event.emit('qiankun-child-loading', false);
+    event.emit('qiankun-child-loading', {
+      isLoading: false
+    });
     return new Promise<void>((resolve) => {
       resolve();
     });

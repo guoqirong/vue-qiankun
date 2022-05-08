@@ -5,14 +5,14 @@
     >
       <slot />
     </div>
-    <div class="spin-content">
+    <div :class="slotDefault ? 'spin-content' : ''">
       <div class="spin-img"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, useSlots, watch } from 'vue';
 
 export default defineComponent({
   name: 'Loading',
@@ -32,6 +32,8 @@ export default defineComponent({
   },
   setup(props) {
     const visibled = ref(false);
+    //判断<slot/>是否有传值
+    const slotDefault = !!useSlots().default;
 
     let timer: number | undefined;
     watch([() => props.visible, () => props.delay], ([visible, delay]) => {
@@ -49,6 +51,7 @@ export default defineComponent({
     
     return {
       visibled,
+      slotDefault
     };
   },
 })

@@ -25,6 +25,7 @@ import Loading from '@/components/loading/index.vue';
 import { routes } from './router';
 import { getQiankunAppUrl } from '@/utils';
 import useEventBus from './utils/eventBus';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -35,8 +36,15 @@ export default defineComponent({
     const qiankunRouter = getQiankunAppUrl();
     const loading = ref(false);
     const [event] = useEventBus();
-    event.on('qiankun-child-loading', (v) => {
-      loading.value = Boolean(v)
+    const route = useRoute();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    event.on('qiankun-child-loading', (data: any) => {
+      const {isLoading, isMenuClick} = data ?? {};
+      if (route.path === '/' && !isMenuClick) {
+        loading.value = false;
+      } else {
+        loading.value = Boolean(isLoading);
+      }
     });
 
     return {

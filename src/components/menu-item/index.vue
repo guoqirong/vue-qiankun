@@ -3,7 +3,14 @@
     :class="`menu-item${getSelected(menuPath) ? ' is-selected' : ''}`"
     @click="() => {
       if (menuPath !== '/') {
-        event.emit('qiankun-child-loading', true);
+        event.emit('qiankun-child-loading', {
+          isLoading: true,
+          isMenuClick: true
+        });
+      } else {
+        event.emit('qiankun-child-loading', {
+          isLoading: false
+        });
       }
       router.push(menuPath);
     }"

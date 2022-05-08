@@ -1,4 +1,4 @@
-const prefix = process.env.NODE_ENV === 'production' ? '/react-qiankun' : '';
+const prefix = process.env.NODE_ENV === 'production' ? '/vue3-qiankun' : '';
 
 export const qiankunApp = [
   {
