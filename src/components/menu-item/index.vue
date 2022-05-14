@@ -2,7 +2,7 @@
   <div
     :class="`menu-item${getSelected(menuPath) ? ' is-selected' : ''}`"
     @click="() => {
-      if (menuPath !== '/') {
+      if (menuPath !== '/' && menuPath !== route.path) {
         event.emit('qiankun-child-loading', {
           isLoading: true,
           isMenuClick: true
@@ -43,6 +43,7 @@ export default defineComponent({
     };
 
     return {
+      route,
       router,
       event,
       getSelected

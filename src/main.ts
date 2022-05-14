@@ -16,7 +16,7 @@ registerMicroApps(qiankunApp.map((item: {
   return {
     ...item,
     props: {
-      userPro: 'react-qiankun',
+      userPro: 'vue-qiankun',
       entry: item.entry,
     }
   };

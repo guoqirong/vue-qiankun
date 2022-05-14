@@ -16,7 +16,7 @@ const gzipPlugins = process.env.NODE_ENV === 'production' ? [
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/vue3-qiankun'
+    ? '/vue-qiankun'
     : '/',
   configureWebpack: {
     plugins: [

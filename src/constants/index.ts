@@ -1,4 +1,4 @@
-const prefix = process.env.NODE_ENV === 'production' ? '/vue3-qiankun' : '';
+const prefix = process.env.NODE_ENV === 'production' ? '/vue-qiankun' : '';
 
 export const qiankunApp = [
   {
@@ -24,5 +24,11 @@ export const qiankunApp = [
     entry: 'https://guoqirong.github.io/vue2-cnode/',
     container: '#container',
     activeRule: prefix + '/#/vue2-cnode',
+  },
+  {
+    name: 'vue-vite-cnode',
+    entry: 'https://guoqirong.github.io/vue-vite-cnode/',
+    container: '#container',
+    activeRule: prefix + '/#/vue-vite-cnode',
   },
 ];
